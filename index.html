@@ -1,8 +1,241 @@
 <!DOCTYPE html>
-<html>
-<head>
-</head>
-<body>
-<h1>hello world!</h1>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon"> -->
+
+    <title>VIP视频解析</title>
+
+    <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/bootstrap-select/2.0.0-beta1/css/bootstrap-select.css">  
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!-- <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script> -->
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="http://cdn.bootcss.com/bootstrap-select/2.0.0-beta1/js/bootstrap-select.js"></script>  
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    
+    <script src="jiexi.js"></script>
+
+    <script>
+    function hasclass(id) {
+        if($('#' + id).hasClass('hidden')){
+            return true;
+        }else{
+            return false;
+        };
+    }
+
+    function change(id) {
+        if(!hasclass(id)){
+            $('#' + id).addClass("hidden");
+            return
+        }
+
+        var array = new Array("jkxq_table","guide_table","support_table");
+        for(j = 0; j < array.length; j++) {
+            var table_id = array[j];
+            if(!hasclass(table_id)){
+                $('#' + table_id).addClass("hidden");
+            }
+        }
+        $('#' + id).removeClass("hidden");
+    }
+
+    function contact(type) {
+        var a="{{ qq|slice:":4" }}";
+        var b="{{ qq|slice:"4:6" }}";
+        var c="{{ qq|slice:"6:" }}";
+        if(type=='qq'){
+            var qhref = "tencent://message/?uin=" + a + b + c
+            window.location = qhref;
+        }else if(type=='email') {
+            if(!hasclass("email")) {
+                $("#email").text("");
+                $("#email").addClass("hidden")
+            }else{
+                qmail = a + b + c + "@qq.com"
+                $("#email").text("  " + qmail);
+                $("#email").removeClass("hidden")
+            }
+        }
+    }
+    </script>
+
+    <style type="text/css">
+    a, a:hover, a:focus, a:active {
+        text-decoration: none;
+        padding: 2px; 
+    }
+    .table-hover>tbody>tr:hover>td,.table-hover>tbody>tr:hover>th {
+        background-color: #e5e5e5
+    }
+    .cover_img {
+        opacity:0.3;
+        filter(alpha=100);
+    }
+    img:hover {
+        opacity:1;
+        filter(alpha=100)
+    }
+    .xxlight {
+        color:#e5e5e5;
+    }
+    .hidden {
+        display: none;
+    }
+    </style>
+
+  </head>
+
+ <body background="bj.png">
+<div class="container" style="">
+    <div class="row">
+        <h3 align="center">视频解析</h3>
+    </div>
+    <div class="row">
+        <div id="kj" class="panel-body">
+            <iframe id="player" src="" allowfullscreen="true" allowtransparency="true" frameborder="0" scrolling="no"  width="100%" height="600px" style="background:#000 url('http://2017-10019481.cossh.myqcloud.com/51.gif') no-repeat center;"></iframe>
+        </div>
+    </div>
+    <form method="get" >
+        <div class="row">
+            <div class="col-md-12 column">
+                <div class="col-md-6 column">
+                    <div class="input-group" style="width: 100%;">
+                    <span class="input-group-addon input-lg" style="width: 80px; ">VIP接口</span>
+                        <select class="form-control input-lg" id="jk">
+                            <option value="http://jx.agxia.com/index.php?url=" selected="">1号【通用】稳定、可全屏</option>
+                            <option value="http://jx.agxia.com/7.php?url=">2号【优酷】</option>
+                            <option value="http://jx.agxia.com/5.php?url=">3号【腾讯】稳定</option>    
+                            <option value="http://jx.agxia.com/6.php?url=">4号【爱奇艺】稳定、可全屏</option>
+                            <option value="http://jx.agxia.com/4.php?url=">5号【土豆】稳定</option>
+                            <option value="http://jx.agxia.com/3.php?url=">6号【搜狐】</option>
+                            <option value="http://jx.agxia.com/2.php?url=">7号【PP视频】</option>  
+                            <option value="http://jx.agxia.com/index.php?url=">8号【芒果TV】</option>
+                            <option value="http://jx.agxia.com/9.php?url=">9号【乐视】</option>
+
+                            <option value="http://www.wmxz.wang/video.php?url=">10号【by 无名小站】爱奇艺、腾讯（和3号一样）、可全屏</option>
+                            <option value="http://api.97kn.com/?url=">11号【by 97kn】比较卡，爱奇艺、优酷、</option>
+                            <option value="http://api.662820.com/xnflv/index.php?url=">12号【by 662820】爱奇艺、</option>
+                            <option value="http://api.nepian.com/ckparse/?url=">13号【by nepian】爱奇艺</option>
+
+                            <option value="http://vip.jlsprh.com/index.php?url=">1号接口</option>
+                            <option value="http://jx.vgoodapi.com/jx.php?url=">2号接口</option>
+                            <option value="http://api.wlzhan.com/sudu/?url=">3号接口</option>
+                            <option value="http://v.buy360.vip/cxjx.php?v=">4号接口</option>
+                            <option value="http://vip.72du.com/api/?url=">5号接口</option>
+                            <option value="http://api.nepian.com/ckparse/?url=">6号接口</option>
+                            <option value="http://api.91exp.com/svip/?url=">7号接口</option>
+                            <option value="http://qtzr.net/s/?qt=">8号接口</option>
+                            <option value="http://www.chepeijian.cn/jiexi/vip.php?url=">9号接口</option>
+                            <option value="http://www.wmxz.wang/video.php?url=">10号接口</option>
+                            <option value="http://api.baiyug.cn/vip/index.php?url=">11号接口</option>
+                            <option value="http://player.jidiaose.com/supapi/iframe.php?v=">12号接口</option>
+                            <option value="http://api.pucms.com/index.php?url=">13号接口</option>
+                            <option value="http://jiexi.92fz.cn/player/vip.php?url=">14号接口</option>
+                            <option value="http://lookxw.com/yingzi/?url=">15号接口</option>
+                            <option value="http://api.97kn.com/?url=">16号接口</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group" style="width: 100%;">
+                        <input class="form-control input-lg" type="search" placeholder="输入需要解析的VIP视频链接" id="url" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin: 15px 0px 15px 0px;">
+            <div class="col-md-12 column">
+                <button id="bf" type="button" class="btn btn-primary btn-lg btn-block" onclick="dihejk()">播放</button>
+            </div>
+        </div>
+    </form>
+    <div class="row" align="center" style="margin: 0px 15px 15px 15px;">
+        <div class="btn-group" role="group">
+            <button id="jkxq" type="button" class="btn btn-default" onclick="change('jkxq_table')">
+                <span class="glyphicon glyphicon-resize-small" aria-hidden="true"></span> 接口详情
+            </button>
+        </div>
+        <div class="btn-group" role="group">
+            <button id="guide" type="button" class="btn btn-default" onclick="change('guide_table')">
+                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> 使用说明
+            </button>
+        </div>
+        <div class="btn-group" role="group">
+            <button id="support" type="button" class="btn btn-default" onclick="change('support_table')">
+                <span class="glyphicon glyphicon-tree-deciduous" aria-hidden="true"></span> 打赏/赞助
+            </button>
+        </div>
+    </div>
+    <div class="row" style="margin: 15px 0px 15px 0px;">
+        <table id="support_table" class="table hidden" style="background-color: #f0f0f0;">
+                <thead>
+                    <tr class="active">
+                        <th style="text-align: center"></th>
+                    </tr>
+                </thead>
+                <tbody >
+                    <tr>
+                        <td align="center">
+                        <div style="display: inline-block; vertical-align: middle;">
+<!--                             <div><h5 align="center" style="color: red;">{{ tip_str.0 }}</h5></div>
+                            <div><h5 align="center">{{ tip_str.1 }}</h5></div>
+                            <div style="float:left; margin: 0 15px;">
+                                <img width="180px" height="180px" src="{% static 'images/wxpay.jpg' %}" alt="微信">
+                                <span><h5 align="center">微信扫一扫</h5></span> 
+                            </div>
+                            <div style="float:left; margin: 0 15px;">
+                                <img width="180px" height="180px" src="{% static 'images/alipay.jpg' %}" alt="支付宝">
+                                <span><h5 align="center">支付宝扫一扫</h5></span> 
+                            </div>
+                            <div style="float:left; margin: 0 15px;">
+                                <img width="180px" height="180px" src="{% static 'images/linkpay.jpg' %}" alt="链克口袋" title="链克口袋，是迅雷旗下玩客云共享计算生态下的基于区块链技术的原生数字资产。">
+                                <span><h5 align="center"><a href="http://red.xunlei.com/index.php?r=site/coin" target="_blank">链克口袋</a>扫一扫</h5></span> 
+                            </div> -->
+                        </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    </div>
+    <div class="row" style="margin: 15px 0px 15px 0px;">
+        <table id="guide_table" class="table table-hover hidden" style="background-color: #fff;">
+                <thead>
+                    <tr class="active">
+                        <th style="text-align: center"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="active">
+                        <th><h3>使用说明</h3></th>
+                    </tr>
+                    <tr>
+                        <td>1、进入各大视频网站，找到想要观看的VIP视频，然后复制链接（浏览器上的视频地址）</td>
+                    </tr>
+                    <tr>
+                        <td>2、选择对应的VIP接口，将链接粘贴到播放地址栏，并点击播放</td>
+                    </tr>
+                    <tr>
+                        <td>3、等待解析完成，即可免费观看VIP视频</td>
+                    </tr>
+                </tbody>
+            </table>
+    </div>
+    <div class="row" style="margin: 15px 0px 15px 0px;">
+        <div id="jkxq_table" class="hidden" >
+            <div style="text-align: center">
+                <h5 style="color: #428bca;"><strong>接口最后更新时间2020/02/07，如某接口失效，请自行选择其他接口。</strong></h5>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
+
